@@ -1,0 +1,9 @@
+Your Order:
+Sandwiches:
+- 12in White:
+  Toppings: , onions, cheddar, bacon, chicken
+  Extras: salami
+  Sauces: mayo, musterd
+  Toasted: Yes
+Drinks:
+- coke

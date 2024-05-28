@@ -1,7 +1,6 @@
 package com.pluralsight;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class SandwichApp {
@@ -9,6 +8,7 @@ public class SandwichApp {
     private static final Map<String, Double> prices = new HashMap<>();
     private static final List<String> drinkNames = Arrays.asList("coke", "Pepsi", "dr. pepper", "sprite", "HI-C", "lemonade");
     private static final List<String> chipNames = Arrays.asList("nacho Doritos", "Cheetos", "hot Cheetos", "ranch Doritos");
+
 
     static {
         // Define the prices of toppings, cheese, and sandwich sizes
@@ -29,6 +29,9 @@ public class SandwichApp {
         prices.put("roast beef", 1.0);
         prices.put("chicken", 1.0);
         prices.put("bacon", 1.0);
+
+
+
          //cheese
         prices.put("american", 0.5);
         prices.put("provolone", 0.5);
@@ -115,6 +118,8 @@ public class SandwichApp {
             System.out.print("\nWould you like to add another sandwich? (yes/no): ");
         } while (scanner.nextLine().trim().equalsIgnoreCase("yes"));
 
+
+
         // Display Regular Toppings
         System.out.println("\nRegular Toppings:");
         prices.forEach((topping, price) -> {
@@ -144,21 +149,65 @@ public class SandwichApp {
     private static Sandwich createSandwich() {
         System.out.println("Customize your sandwich:");
 
-        System.out.println("Select your bread:");
-        String breadType = getUserInput("Enter bread type (e.g., White, Wheat, Rye, Wrap): ");
-
-        System.out.println("Select sandwich size:");
-        String size = getUserInput("Enter size (e.g., Small, Medium, Large): ");
+        String breadType = selectBreadType();
+        String size = selectSize();
 
         List<String> toppings = selectOptions("Toppings");
         List<String> extras = selectOptions("Extras");
         List<String> sauces = selectOptions("Sauces");
 
-        String toastInput = getUserInput("Would you like your sandwich toasted? (yes/no): ");
+        String toastInput = getUserInput();
         boolean toasted = toastInput.equalsIgnoreCase("yes");
 
         return new Sandwich(size, breadType, toppings, extras, sauces, toasted);
     }
+    private static String selectSize() {
+        System.out.println("Select sandwich size:");
+        System.out.println("1. 4in");
+        System.out.println("2. 8in");
+        System.out.println("3. 12in");
+        int choice = getIntInput();
+
+        switch (choice) {
+            case 1:
+                return "4in";
+            case 2:
+                return "8in";
+            case 3:
+                return "12in";
+            default:
+                System.out.println("Invalid choice. Defaulting to Medium size.");
+                return "Medium"; // Default to Medium size if an invalid choice is entered
+        }
+    }
+
+
+
+
+    private static String selectBreadType() {
+        System.out.println("Select your bread type:");
+        System.out.println("1. White");
+        System.out.println("2. Wheat");
+        System.out.println("3. Rye");
+        System.out.println("4. Wrap");
+        int choice = getIntInput();
+
+
+        switch (choice) {
+            case 1:
+                return "White";
+            case 2:
+                return "Wheat";
+            case 3:
+                return "Rye";
+            case 4:
+                return "Wrap";
+            default:
+                System.out.println("Invalid choice. Defaulting to White bread.");
+                return "White"; // Default to White bread if an invalid choice is entered
+        }
+    }
+
 
     private static List<String> selectOptions(String optionName) {
         List<String> optionsList = new ArrayList<>();
@@ -173,8 +222,8 @@ public class SandwichApp {
         return optionsList;
     }
 
-    private static String getUserInput(String prompt) {
-        System.out.print(prompt);
+    private static String getUserInput() {
+        System.out.print("Would you like your sandwich toasted? (yes/no): ");
         return scanner.nextLine().trim();
     }
 
@@ -188,24 +237,45 @@ public class SandwichApp {
 
     private static void displayMenuOptions() {
         System.out.println("\nMenu Options:");
-        System.out.println("Regular Toppings:");
-        for (Map.Entry<String, Double> entry : prices.entrySet()) {
-            if (entry.getValue() == 0.0) {
-                System.out.println("- " + entry.getKey() + " ($" + entry.getValue() + ")");
+
+
+        // Display Regular Toppings
+        System.out.println("\nRegular Toppings:");
+        prices.forEach((topping, price) -> {
+            if (price == 0.0) {
+                System.out.println("- " + topping + " ($" + price + ")");
             }
-        }
+        });
+
+        // Display Premium Toppings
         System.out.println("\nPremium Toppings:");
-        for (Map.Entry<String, Double> entry : prices.entrySet()) {
-            if (entry.getValue() == 1.0) {
-                System.out.println("- " + entry.getKey() + " ($" + entry.getValue() + ")");
+        prices.forEach((topping, price) -> {
+            if (price == 1.0) {
+                System.out.println("- " + topping + " ($" + price + ")");
             }
-        }
-        System.out.println("\nCheese option:");
-        for (Map.Entry<String, Double> entry : prices.entrySet()) {
-            if (entry.getValue() == 0.5) {
-                System.out.println("- " + entry.getKey() + " ($" + entry.getValue() + ")");
+        });
+
+        // Display Cheese Options
+        System.out.println("\nCheese options:");
+        prices.forEach((cheese, price) -> {
+            if (price == 0.5) {
+                System.out.println("- " + cheese + " ($" + price + ")");
             }
+        });
+
+        // Display Drink Options with Prices
+        System.out.println("\nDrink options:");
+        for (String drink : drinkNames) {
+            System.out.println("- " + drink + " ($" + prices.get(drink.toLowerCase()) + ")");
         }
+
+        // Display Chip Options with Prices
+        System.out.println("\nChip options:");
+        for (String chip : chipNames){
+            System.out.println("- " + chip + " ($" + prices.get(chip.toLowerCase()) + ")");
+        }
+
+        // Display Sandwich Sizes
         System.out.println("\nSandwich Sizes:");
         System.out.println("- Small ($3.0)");
         System.out.println("- Medium ($4.0)");
@@ -216,23 +286,28 @@ public class SandwichApp {
         double totalPrice = 0.0;
         System.out.println("\nYour order details:");
         for (int i = 0; i < sandwiches.size(); i++) {
+            Sandwich sandwich = sandwiches.get(i);
             System.out.println("Sandwich #" + (i + 1) + ":");
-            System.out.println(sandwiches.get(i));
-            totalPrice += sandwiches.get(i).calculateTotalPrice();
+            System.out.println(sandwich);
+            double sandwichPrice = sandwich.calculateTotalPrice();
+            totalPrice += sandwichPrice;
+            System.out.println("Sandwich Price: $" + sandwichPrice);
         }
         for (String drink : drinks) {
-            System.out.println("Drink: " + drink);
-            totalPrice += 1.50; // Assuming each drink costs $1.50
+            double drinkPrice = prices.get(drink.toLowerCase());
+            System.out.println("Drink: " + drink + " ($" + drinkPrice + ")");
+            totalPrice += drinkPrice;
         }
         for (String chip : chips) {
-            System.out.println("Chips: " + chip);
-            totalPrice += 1.00; // Assuming each pack of chips costs $1.00
+            double chipPrice = prices.get(chip.toLowerCase());
+            System.out.println("Chips: " + chip + " ($" + chipPrice + ")");
+            totalPrice += chipPrice;
         }
         System.out.println("Total Price: $" + totalPrice);
     }
 
     private static void saveOrderToFile(List<Sandwich> sandwiches, List<String> drinks, List<String> chips) {
-        try (FileWriter writer = new FileWriter("SandwichOrder.txt")) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("order.txt"))) {
             writer.write("Your Order:\n");
             if (!sandwiches.isEmpty()) {
                 writer.write("Sandwiches:\n");
@@ -242,35 +317,62 @@ public class SandwichApp {
                     writer.write("  Extras: " + String.join(", ", sandwich.getExtras()) + "\n");
                     writer.write("  Sauces: " + String.join(", ", sandwich.getSauces()) + "\n");
                     writer.write("  Toasted: " + (sandwich.isToasted() ? "Yes" : "No") + "\n");
+                    writer.write("  Price: $" + sandwich.calculateTotalPrice() + "\n");
                 }
             }
             if (!drinks.isEmpty()) {
                 writer.write("Drinks:\n");
-                drinks.forEach(drink -> {
-                    try {
-                        writer.write("- " + drink + "\n");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                for (String drink : drinks) {
+                    writer.write("- " + drink + " ($" + prices.get(drink.toLowerCase()) + ")\n");
+                }
             }
             if (!chips.isEmpty()) {
                 writer.write("Chips:\n");
-                chips.forEach(chip -> {
-                    try {
-                        writer.write("- " + chip + "\n");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                for (String chip : chips) {
+                    writer.write("- " + chip + " ($" + prices.get(chip.toLowerCase()) + ")\n");
+                }
             }
-            System.out.println("Order saved to file: SandwichOrder.txt");
+            double totalPrice = calculateTotalPrice(sandwiches, drinks, chips);
+            writer.write("Total Price: $" + totalPrice + "\n");
+            System.out.println("Order saved to file: order.txt");
         } catch (IOException e) {
             System.out.println("Error occurred while saving the order to file.");
             e.printStackTrace();
         }
-    }
+
 }
+    private static void readOrderFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("order.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error occurred while reading the order from file.");
+            e.printStackTrace();
+        }
+    }
+    private static double calculateTotalPrice(List<Sandwich> sandwiches, List<String> drinks, List<String> chips) {
+        double totalPrice = 0.0;
+
+        // Calculate total price of sandwiches
+        for (Sandwich sandwich : sandwiches) {
+            totalPrice += sandwich.calculateTotalPrice();
+        }
+
+        // Add price of each drink
+        for (String drink : drinks) {
+            totalPrice += prices.getOrDefault(drink.toLowerCase(), 0.0); // Get the price from the prices map
+        }
+
+        // Add price of each chip
+        for (String chip : chips) {
+            totalPrice += prices.getOrDefault(chip.toLowerCase(), 0.0); // Get the price from the prices map
+        }
+
+        return totalPrice;
+    }
+    }
 
 
 
