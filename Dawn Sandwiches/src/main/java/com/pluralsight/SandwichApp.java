@@ -12,6 +12,7 @@ public class SandwichApp {
 
     static {
         // Define the prices of toppings, cheese, and sandwich sizes
+        //veggies
         prices.put("lettuce", 0.0);
         prices.put("peppers", 0.0);
         prices.put("onions", 0.0);
@@ -21,18 +22,33 @@ public class SandwichApp {
         prices.put("pickles", 0.0);
         prices.put("guacamole", 0.0);
         prices.put("mushrooms", 0.0);
-
+          //meats
         prices.put("steak", 1.0);
         prices.put("ham", 1.0);
         prices.put("salami", 1.0);
         prices.put("roast beef", 1.0);
         prices.put("chicken", 1.0);
         prices.put("bacon", 1.0);
-
+         //cheese
         prices.put("american", 0.5);
         prices.put("provolone", 0.5);
         prices.put("cheddar", 0.5);
         prices.put("swiss", 0.5);
+
+        // Prices for drinks
+        prices.put("coke", 1.5);
+        prices.put("pepsi", 1.5);
+        prices.put("dr. pepper", 1.5);
+        prices.put("sprite", 1.5);
+        prices.put("hi-c", 1.5);
+        prices.put("lemonade", 1.5);
+
+        // Prices for chips
+        prices.put("nacho doritos", 1.0);
+        prices.put("cheetos", 1.0);
+        prices.put("hot cheetos", 1.0);
+        prices.put("ranch doritos", 1.0);
+
     }
 
     public static void main(String[] args) {
