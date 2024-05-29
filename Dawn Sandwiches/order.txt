@@ -1,0 +1,11 @@
+Your Order:
+Sandwiches:
+- 12in White:
+  Toppings: , cheddar, bacon, chicken
+  Extras: salami
+  Sauces: mayo
+  Toasted: Yes
+  Price: $4.0
+Drinks:
+- coke ($1.5)
+Total Price: $5.5

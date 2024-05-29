@@ -6,7 +6,23 @@ import java.util.Map;
 
 public class Sandwich {
     private static final Map<String, Double> TOPPING_PRICES = createToppingPrices();
-    private Double totalPrice;
+    private double totalPrice;
+
+    private String size;
+    private String breadType;
+    private List<String> toppings;
+    private List<String> extras;
+    private List<String> sauces;
+    private boolean toasted;
+
+    public Sandwich(String size, String breadType, List<String> toppings, List<String> extras, List<String> sauces, boolean toasted) {
+        this.size = size;
+        this.breadType = breadType;
+        this.toppings = toppings;
+        this.extras = extras;
+        this.sauces = sauces;
+        this.toasted = toasted;
+    }
 
     private static Map<String, Double> createToppingPrices() {
         Map<String, Double> prices = new HashMap<>();
@@ -30,7 +46,7 @@ public class Sandwich {
         prices.put("chicken", 1.0);
         prices.put("bacon", 1.0);
 
-// Regular Cheese
+        // Regular Cheese
         prices.put("american", 0.5);
         prices.put("provolone", 0.5);
         prices.put("cheddar", 0.5);
@@ -38,23 +54,8 @@ public class Sandwich {
 
         // Premium Cheese
         prices.put("extra cheese", 0.3); // Additional cost for premium cheese
-       return prices;
-    }
 
-    private static String size;
-    private static String breadType;
-    static List<String> toppings;
-    private static List<String> extras;
-    private static List<String> sauces;
-    private static boolean toasted;
-
-    public Sandwich(String size, String breadType, List<String> toppings, List<String> extras, List<String> sauces, boolean toasted) {
-        this.size = size;
-        this.breadType = breadType;
-        this.toppings = toppings;
-        this.extras = extras;
-        this.sauces = sauces;
-        this.toasted = toasted;
+        return prices;
     }
 
     public double calculateTotalPrice() {
@@ -74,12 +75,10 @@ public class Sandwich {
         totalPrice += sauces.size();
 
         return totalPrice;
-
     }
 
-
-
-    public static String getSize() {
+    // Getters and setters for instance fields
+    public String getSize() {
         return size;
     }
 
@@ -87,7 +86,15 @@ public class Sandwich {
         this.size = size;
     }
 
-    public static String getBreadType() {
+    public boolean isToasted() {
+        return toasted;
+    }
+
+    public void setToasted(boolean toasted) {
+        this.toasted = toasted;
+    }
+
+    public String getBreadType() {
         return breadType;
     }
 
@@ -95,7 +102,7 @@ public class Sandwich {
         this.breadType = breadType;
     }
 
-    public static List<String> getToppings() {
+    public List<String> getToppings() {
         return toppings;
     }
 
@@ -103,7 +110,7 @@ public class Sandwich {
         this.toppings = toppings;
     }
 
-    public static List<String> getExtras() {
+    public List<String> getExtras() {
         return extras;
     }
 
@@ -111,7 +118,7 @@ public class Sandwich {
         this.extras = extras;
     }
 
-    public static List<String> getSauces() {
+    public List<String> getSauces() {
         return sauces;
     }
 
@@ -119,13 +126,6 @@ public class Sandwich {
         this.sauces = sauces;
     }
 
-    public static boolean isToasted() {
-        return toasted;
-    }
-
-    public void setToasted(boolean toasted) {
-        this.toasted = toasted;
-    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
