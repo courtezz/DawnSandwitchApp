@@ -3,8 +3,10 @@ package com.pluralsight;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class SandwichOrderingSystem {
@@ -101,11 +103,12 @@ public class SandwichOrderingSystem {
 
     private void generateReceipt() {
         System.out.println("Receipt generated:");
-        order.displayOrder();
+        System.out.println(order.displayOrder());
         double totalPrice = order.calculateTotalPrice();
         System.out.println("Total Price: $" + totalPrice);
         System.out.println("Payment Method: Cash");
         System.out.println("Thank you for your purchase!");
+        saveOrderToFile(order.displayOrder());
     }
 
     private void addChips() {
@@ -278,21 +281,18 @@ public class SandwichOrderingSystem {
         System.out.println("- Jalapenos ($0.75)");
     }
     private void saveOrderToFile(String orderSummary) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-
-        Object date = null;
-        String fileName = "Receipts/" + formatter.format((Object) null) + "_dawnApp.txt";
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+        String finalDate = date.format(formatter);
+        String pathThrough = "src/main/resources/dawnApp/" + finalDate + ".txt";
         try {
-            File directory = new File("dawnApp");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-            FileWriter writer = new FileWriter(new File(directory, fileName));
+            FileWriter writer = new FileWriter(pathThrough);
             writer.write(orderSummary);
             writer.close();
-            System.out.println("Order has been saved to " + fileName);
+            System.out.println("Order has been saved to ");
         } catch (IOException e) {
             System.out.println("An error occurred while saving the order.");
             e.printStackTrace();
         }
-    }}
+    }
+}

@@ -1,14 +1,12 @@
 package com.pluralsight;
 
-import com.pluralsight.Sandwich;
-
 import java.util.ArrayList;
 import java.util.List;
 
 class Order {
-    private List<Sandwich> sandwiches;
-    private List<String> drinks;
-    private List<String> chips;
+    private final List<Sandwich> sandwiches;
+    private final List<String> drinks;
+    private final List<String> chips;
     private double totalPrice;
 
     public Order() {
@@ -51,6 +49,10 @@ class Order {
 
         // Additional charges for premium toppings can be added here
 
+        if (sandwich.hasExtraMeat()) {
+            basePrice += 2.0; // Additional charge for extra meat
+        }
+
         return basePrice;
     }
 
@@ -65,45 +67,36 @@ class Order {
         totalPrice = 0.0;
     }
 
-    public void displayOrder() {
-        System.out.println("\nOrder Details:");
+    public String displayOrder() {
+        StringBuilder output = new StringBuilder();
+        output.append("\nOrder Details: \n");
 
         // Display sandwiches
         if (!sandwiches.isEmpty()) {
-            System.out.println("Sandwiches:");
+            output.append("\nSandwiches: \n");
             for (Sandwich sandwich : sandwiches) {
-                System.out.println(sandwich);
+                output.append(sandwich.toString()).append("\n");
             }
         }
 
         // Display drinks
         if (!drinks.isEmpty()) {
-            System.out.println("Drinks:");
+            output.append("\nDrinks: \n");
             for (String drink : drinks) {
-                System.out.println("- " + drink);
+                output.append("- ").append(drink).append("\n");
             }
         }
 
         // Display chips
         if (!chips.isEmpty()) {
-            System.out.println("Chips:");
+            output.append("\nChips: \n");
             for (String chip : chips) {
-                System.out.println("- " + chip);
+                output.append("- ").append(chip).append("\n");
             }
         }
 
-        System.out.println("Total Price: $" + totalPrice);
-    }
-
-    public Sandwich[] getSandwiches() {
-        return sandwiches.toArray(new Sandwich[0]);
-    }
-
-    public String[] getDrinks() {
-        return drinks.toArray(new String[0]);
-    }
-
-    public String[] getChips() {
-        return chips.toArray(new String[0]);
+        output.append("\nTotal Price: \n").append(totalPrice);
+        return output.toString();
     }
 }
+

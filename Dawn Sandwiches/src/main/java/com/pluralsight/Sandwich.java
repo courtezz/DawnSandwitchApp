@@ -85,4 +85,8 @@ public class Sandwich {
     public String getBread() {
         return null;
     }
+
+    public boolean hasExtraMeat() {
+        return false;
+    }
 }
