@@ -1,0 +1,17 @@
+Order Details:
+Sandwich:
+- Size: 12 inches
+- Bread: null
+- Toasted: Yes
+- Regular Toppings:
+  - onion
+  - pickle
+  - tomato
+- Premium Toppings:
+  - bacon
+  - pepper jack
+- Price: $null
+
+Drink: Large Lemonade
+Chips: Sour Cream & Onion Chips
+Total Price: $14.49

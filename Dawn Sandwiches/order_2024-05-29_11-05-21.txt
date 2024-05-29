@@ -1,0 +1,17 @@
+Order Details:
+Sandwich:
+- Size: 12 inches
+- Bread: null
+- Toasted: Yes
+- Regular Toppings:
+  - onion
+  - bacon
+  - pepper jack
+  - lettuce
+- Premium Toppings:
+  - bacon
+- Price: $null
+
+Drink: coke
+Chips: doritos
+Total Price: $14.49

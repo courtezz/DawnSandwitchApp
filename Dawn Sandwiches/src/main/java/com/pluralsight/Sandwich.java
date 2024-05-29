@@ -1,89 +1,57 @@
 package com.pluralsight;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Sandwich {
-    private static final Map<String, Double> TOPPING_PRICES = createToppingPrices();
-    private double totalPrice;
-
     private String size;
-    private String breadType;
-    private List<String> toppings;
-    private List<String> extras;
-    private List<String> sauces;
+    private ArrayList<String> regularToppings;
+    private ArrayList<String> premiumToppings;
     private boolean toasted;
 
-    public Sandwich(String size, String breadType, List<String> toppings, List<String> extras, List<String> sauces, boolean toasted) {
+    private static final double PRICE_4_INCH = 5.50;
+    private static final double PRICE_8_INCH = 7.00;
+    private static final double PRICE_12_INCH = 8.50;
+    private static final double MEATS_PRICE = 1.00;
+    private static final double EXTRA_MEAT_PRICE = 0.50;
+    private static final double CHEESE_PRICE = 0.75;
+    private static final double EXTRA_CHEESE_PRICE = 0.30;
+
+    public Sandwich(String size, String bread) {
         this.size = size;
-        this.breadType = breadType;
-        this.toppings = toppings;
-        this.extras = extras;
-        this.sauces = sauces;
-        this.toasted = toasted;
+        regularToppings = new ArrayList<>();
+        premiumToppings = new ArrayList<>();
+        toasted = false;
     }
 
-    private static Map<String, Double> createToppingPrices() {
-        Map<String, Double> prices = new HashMap<>();
-
-        // Regular Toppings
-        prices.put("lettuce", 0.0);
-        prices.put("peppers", 0.0);
-        prices.put("onions", 0.0);
-        prices.put("tomatoes", 0.0);
-        prices.put("jalapenos", 0.0);
-        prices.put("cucumbers", 0.0);
-        prices.put("pickles", 0.0);
-        prices.put("guacamole", 0.0);
-        prices.put("mushrooms", 0.0);
-
-        // Premium Toppings
-        prices.put("steak", 1.0);
-        prices.put("ham", 1.0);
-        prices.put("salami", 1.0);
-        prices.put("roast beef", 1.0);
-        prices.put("chicken", 1.0);
-        prices.put("bacon", 1.0);
-
-        // Regular Cheese
-        prices.put("american", 0.5);
-        prices.put("provolone", 0.5);
-        prices.put("cheddar", 0.5);
-        prices.put("swiss", 0.5);
-
-        // Premium Cheese
-        prices.put("extra cheese", 0.3); // Additional cost for premium cheese
-
-        return prices;
-    }
-
-    public double calculateTotalPrice() {
-        double totalPrice = 0;
-
-        // Calculate the cost of regular toppings
-        for (String topping : toppings) {
-            totalPrice += TOPPING_PRICES.getOrDefault(topping, 0.0);
+    public double calculateCost() {
+        double basePrice = 0;
+        switch (size) {
+            case "4":
+                basePrice = PRICE_4_INCH;
+                break;
+            case "8":
+                basePrice = PRICE_8_INCH;
+                break;
+            case "12":
+                basePrice = PRICE_12_INCH;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid sandwich size: " + size);
         }
 
-        // Calculate the cost of premium toppings
-        for (String extra : extras) {
-            totalPrice += 0.5; // Additional cost for premium toppings
-        }
-
-        // Add the cost of sauces (assuming sauces are free)
-        totalPrice += sauces.size();
-
-        return totalPrice;
+        basePrice += MEATS_PRICE + CHEESE_PRICE;
+        basePrice += premiumToppings.size() * (EXTRA_MEAT_PRICE + EXTRA_CHEESE_PRICE);
+        return basePrice;
     }
 
-    // Getters and setters for instance fields
+    public String toString() {
+        return "Size: " + size + "\", Regular Toppings: " + regularToppings +
+                ", Premium Toppings: " + premiumToppings + ", Toasted: " + toasted +
+                ", Cost: $" + calculateCost();
+    }
+
     public String getSize() {
         return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public boolean isToasted() {
@@ -94,47 +62,27 @@ public class Sandwich {
         this.toasted = toasted;
     }
 
-    public String getBreadType() {
-        return breadType;
+    public ArrayList<String> getRegularToppings() {
+        return regularToppings;
     }
 
-    public void setBreadType(String breadType) {
-        this.breadType = breadType;
+    public ArrayList<String> getPremiumToppings() {
+        return premiumToppings;
     }
 
-    public List<String> getToppings() {
-        return toppings;
+    public void addRegularTopping(String topping) {
+        regularToppings.add(topping);
     }
 
-    public void setToppings(List<String> toppings) {
-        this.toppings = toppings;
+    public void addPremiumTopping(String topping) {
+        premiumToppings.add(topping);
     }
 
-    public List<String> getExtras() {
-        return extras;
+    public String calculatePrice() {
+        return null;
     }
 
-    public void setExtras(List<String> extras) {
-        this.extras = extras;
-    }
-
-    public List<String> getSauces() {
-        return sauces;
-    }
-
-    public void setSauces(List<String> sauces) {
-        this.sauces = sauces;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Size: ").append(size).append("\n");
-        sb.append("Bread Type: ").append(breadType).append("\n");
-        sb.append("Toppings: ").append(toppings).append("\n");
-        sb.append("Extras: ").append(extras).append("\n");
-        sb.append("Sauces: ").append(sauces).append("\n");
-        sb.append("Toasted: ").append(toasted ? "Yes" : "No");
-        return sb.toString();
+    public String getBread() {
+        return null;
     }
 }
