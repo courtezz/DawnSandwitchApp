@@ -5,8 +5,8 @@ This Java application allows users to create custom sandwich orders, add drinks 
 Project Description
 The Dawn Sandwich Ordering System provides an interactive console interface for users to place their sandwich orders. Users can:
 Create a new order
-also aple to pick a specilty sandwich and customize it to your liking 
-Customize their sandwiches by selecting size, bread type, meats, cheeses, toppings, and sauces. Add drinks and chips to their order. View an order summary and checkout. Save the order details to a receipt file. Features
+ pick a specilty sandwich and customize it
+ Customize their sandwiches by selecting size, bread type, meats, cheeses, toppings, and sauces. Add drinks and chips to their order. View an order summary and checkout. Save the order details to a receipt file. Features
 Interactive Menu: Users navigate through various menus to build their custom sandwiches and complete their orders.
 Multiple Sandwiches: Users can add multiple sandwiches to a single order.
 Order Summary: Provides a detailed summary of the entire order, including prices for sandwiches, drinks, and chips.
