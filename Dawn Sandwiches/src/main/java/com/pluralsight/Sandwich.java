@@ -1,11 +1,15 @@
 package com.pluralsight;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sandwich {
     private String size;
+    private String bread;
     private ArrayList<String> regularToppings;
     private ArrayList<String> premiumToppings;
+    private boolean extraMeat;
+    private List<String> sauces;
     private boolean toasted;
 
     private static final double PRICE_4_INCH = 5.50;
@@ -18,9 +22,12 @@ public class Sandwich {
 
     public Sandwich(String size, String bread) {
         this.size = size;
+        this.bread = bread;
         regularToppings = new ArrayList<>();
         premiumToppings = new ArrayList<>();
         toasted = false;
+        this.extraMeat = false;
+        this.sauces = new ArrayList<>();
     }
 
     public double calculateCost() {
@@ -49,7 +56,7 @@ public class Sandwich {
                 ", Premium Toppings: " + premiumToppings + ", Toasted: " + toasted +
                 ", Cost: $" + calculateCost();
     }
-
+    // Other methods (getters, setters, etc.)
     public String getSize() {
         return size;
     }
@@ -88,5 +95,24 @@ public class Sandwich {
 
     public boolean hasExtraMeat() {
         return false;
+    }
+    public void addSauce(String sauce) {
+        sauces.add(sauce);
+    }
+
+    public List<String> getSauces() {
+        return sauces;
+    }
+
+    public void setExtraMeat(boolean b) {
+    }
+
+    public void setCheese(String cheddar) {
+    }
+
+    public void removeTopping(String trim) {
+    }
+
+    public void setExtraCheese(boolean b) {
     }
 }

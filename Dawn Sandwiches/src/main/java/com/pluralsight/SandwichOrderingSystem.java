@@ -1,17 +1,15 @@
 package com.pluralsight;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class SandwichOrderingSystem {
-    private final Order order;
-    private final Scanner scanner;
+    private final Order order;  // Stores the current order
+    private final Scanner scanner;  // Scanner object to take user input
+    private double totalPrice;  // Stores the total price of the order
 
     public SandwichOrderingSystem(Order order, Scanner scanner) {
         this.order = order;
@@ -19,13 +17,14 @@ public class SandwichOrderingSystem {
     }
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        Order order = new Order();
-        SandwichOrderingSystem system = new SandwichOrderingSystem(order, scanner);
-        system.startOrderingProcess();
-        scanner.close();
+        Scanner scanner = new Scanner(System.in);  // Create a scanner to take user input from console
+        Order order = new Order();  // Create a new order object
+        SandwichOrderingSystem system = new SandwichOrderingSystem(order, scanner);  // Create a new SandwichOrderingSystem object
+        system.startOrderingProcess();  // Start the ordering process
+        scanner.close();  // Close the scanner after the ordering process is finished
     }
 
+    // Method to start the ordering process
     public void startOrderingProcess() throws IOException {
         System.out.println("Welcome to the Sandwich Ordering System!");
         while (true) {
@@ -33,21 +32,22 @@ public class SandwichOrderingSystem {
             System.out.println("1) New Order");
             System.out.println("0) Exit");
 
-            int choice = scanner.nextInt();
+            int choice = scanner.nextInt();  // Read user choice
             scanner.nextLine(); // Consume newline
 
-            if (choice == 0) {
+            if (choice == 0) {  // If choice is 0, exit the application
                 System.out.println("Exiting the application...");
                 break;
-            } else if (choice == 1) {
-                order.clear();
-                handleOrder();
-            } else {
+            } else if (choice == 1) {  // If choice is 1, start a new order
+                order.clear();  // Clear the previous order
+                handleOrder();  // Proceed to handle the new order
+            } else {  // If choice is neither 0 nor 1, prompt user to enter a valid choice
                 System.out.println("Invalid choice, please try again.");
             }
         }
     }
 
+    // Method to handle the ordering process
     private void handleOrder() throws IOException {
         while (true) {
             System.out.println("Order Screen");
@@ -57,71 +57,73 @@ public class SandwichOrderingSystem {
             System.out.println("4) Checkout");
             System.out.println("0) Cancel Order");
 
-            int orderChoice = scanner.nextInt();
+            int orderChoice = scanner.nextInt();  // Read user choice
             scanner.nextLine(); // Consume newline
 
-            if (orderChoice == 0) {
-                order.clear();
+            if (orderChoice == 0) {  // If choice is 0, cancel the order
+                order.clear();  // Clear the order
                 break;
-            } else if (orderChoice == 1) {
+            } else if (orderChoice == 1) {  // If choice is 1, add a sandwich to the order
                 addSandwich();
-            } else if (orderChoice == 2) {
+            } else if (orderChoice == 2) {  // If choice is 2, add a drink to the order
                 addDrink();
-            } else if (orderChoice == 3) {
+            } else if (orderChoice == 3) {  // If choice is 3, add chips to the order
                 addChips();
-            } else if (orderChoice == 4) {
+            } else if (orderChoice == 4) {  // If choice is 4, proceed to checkout
                 checkoutOrder();
                 break;
-            } else {
+            } else {  // If choice is none of the above, prompt user to enter a valid choice
                 System.out.println("Invalid choice, please try again.");
             }
         }
     }
 
+    // Method to handle the checkout process
     private void checkoutOrder() throws IOException {
-        order.displayOrder();
-        double totalPrice = order.calculateTotalPrice();
-        System.out.println("Total Price: $" + totalPrice);
-        System.out.println("Proceed to checkout? (yes/no)");
-        String confirmCheckout = scanner.nextLine().toLowerCase();
-        if (confirmCheckout.equals("yes")) {
-            performCheckout();
-        } else {
+        order.displayOrder();  // Display the order details
+        double totalPrice = order.calculateTotalPrice();  // Calculate the total price of the order
+        System.out.println("Total Price: $" + totalPrice);  // Display the total price to the user
+        System.out.println("Proceed to checkout? (yes/no)");  // Prompt user to confirm checkout
+        String confirmCheckout = scanner.nextLine().toLowerCase();  // Read user input
+        if (confirmCheckout.equals("yes")) {  // If user confirms checkout
+            performCheckout();  // Proceed with the checkout process
+        } else {  // If user does not confirm checkout
             System.out.println("Order not confirmed. Continuing with the order.");
         }
     }
 
+    // Method to perform the checkout process
     private void performCheckout() throws IOException {
-        generateReceipt();
-        //saveOrderToFile();
-        System.out.println("Checkout completed. Thank you for your order!");
+        generateReceipt();  // Generate a receipt for the order
+        System.out.println("Checkout completed. Thank you for your order!");  // Display checkout completion message
     }
 
-
-
-
-
+    // Method to generate a receipt for the order
     private void generateReceipt() {
-        System.out.println("Receipt generated:");
-        System.out.println(order.displayOrder());
-        double totalPrice = order.calculateTotalPrice();
-        System.out.println("Total Price: $" + totalPrice);
-        System.out.println("Payment Method: Cash");
-        System.out.println("Thank you for your purchase!");
-        saveOrderToFile(order.displayOrder());
+        System.out.println("Receipt generated:");  // Display receipt header
+        System.out.println(order.displayOrder());  // Display order details
+        double totalPrice = order.calculateTotalPrice();  // Calculate total price of the order
+        System.out.println("Total Price: $" + totalPrice);  // Display total price to the user
+        System.out.println("Payment Method: Cash");  // Display payment method
+        System.out.println("Thank you for your purchase!");  // Display thank you message
+        saveOrderToFile(order.displayOrder());  // Save the order details to a file
     }
 
+    // Method to add chips to the order
     private void addChips() {
+        // Display options for chips
         System.out.println("Choose chips type:");
         System.out.println("1) Regular Chips ($1.00)");
         System.out.println("2) BBQ Chips ($1.25)");
         System.out.println("3) Sour Cream & Onion Chips ($1.25)");
-        int chipsChoice = scanner.nextInt();
+
+        int chipsChoice = scanner.nextInt();  // Read user choice
         scanner.nextLine(); // Consume newline
 
         String chipsType;
         double chipsPrice;
 
+        // Assign chips type and price based on user choice
         switch (chipsChoice) {
             case 1:
                 chipsType = "Regular Chips";
@@ -142,21 +144,25 @@ public class SandwichOrderingSystem {
                 break;
         }
 
-        order.addChips(chipsType);
+        order.addChips(chipsType);  // Add chips to the order
         System.out.println("Chips added to the order.");
     }
 
+    // Method to add drink to the order
     private void addDrink() {
+        // Display options for drink size
         System.out.println("Choose drink size:");
         System.out.println("1) Small ($1.50)");
         System.out.println("2) Medium ($2.00)");
         System.out.println("3) Large ($2.50)");
-        int drinkSizeChoice = scanner.nextInt();
+
+        int drinkSizeChoice = scanner.nextInt();  // Read user choice
         scanner.nextLine(); // Consume newline
 
         String drinkSize;
         double drinkPrice;
 
+        // Assign drink size and price based on user choice
         switch (drinkSizeChoice) {
             case 1:
                 drinkSize = "Small";
@@ -175,91 +181,226 @@ public class SandwichOrderingSystem {
                 drinkSize = "Small";
                 drinkPrice = 1.50;
                 break;
-    }
+        }
+
+        // Display options for drink type
         System.out.println("Choose drink option:");
         System.out.println("1) Coke ($1.00)");
         System.out.println("2) Pepsi ($1.00)");
         System.out.println("3) Lemonade ($1.50)");
-        int drinkOptionChoice = scanner.nextInt();
+
+        int drinkOptionChoice = scanner.nextInt();  // Read user choice
         scanner.nextLine(); // Consume newline
 
         String drinkOption;
-        double drinkOptionPrice;
 
+        // Assign drink option based on user choice
         switch (drinkOptionChoice) {
             case 1:
                 drinkOption = "Coke";
-                drinkOptionPrice = 1.00;
                 break;
             case 2:
                 drinkOption = "Pepsi";
-                drinkOptionPrice = 1.00;
                 break;
             case 3:
                 drinkOption = "Lemonade";
-                drinkOptionPrice = 1.50;
                 break;
             default:
                 System.out.println("Invalid choice, drink option set to Coke.");
                 drinkOption = "Coke";
-                drinkOptionPrice = 1.00;
                 break;
         }
 
-        order.addDrink(drinkSize + " " + drinkOption);
+        order.addDrink(drinkSize + " " + drinkOption);  // Add drink to the order
         System.out.println("Drink added to the order.");
     }
+
+    // Method to add sandwich to the order
     private void addSandwich() {
         while (true) {
             System.out.println("\nWould you like to order a sandwich? (yes/no)");
             String choice = scanner.nextLine().toLowerCase();
             if (choice.equals("no")) {
                 break;
-            }
-            System.out.println("Customizing sandwich:");
-            System.out.println("Choose sandwich size (4/8/12 inches):");
-            String size = scanner.nextLine();
-            System.out.println("Choose bread type (white/wheat/rye/wrap):");
-            String bread = scanner.nextLine();
-            Sandwich sandwich = new Sandwich(size, bread);
-            System.out.println("Would you like it toasted? (yes/no)");
-            String toastedChoice = scanner.nextLine().toLowerCase();
-            sandwich.setToasted(toastedChoice.equals("yes"));
+            } else if (choice.equals("yes")) {
+                // Display options for sandwich type
+                System.out.println("Choose sandwich type:");
+                System.out.println("1) BLT");
+                System.out.println("2) Philly Cheese Steak");
+                System.out.println("3) Custom Sandwich");
 
-            // Display regular and premium topping options with prices
-            displayToppingOptions();
+                int sandwichChoice = scanner.nextInt();  // Read user choice
+                scanner.nextLine(); // Consume newline
 
-            System.out.println("Add regular toppings (comma-separated, enter 'done' when finished):");
-            String regularToppingsInput = scanner.nextLine();
-            if (!regularToppingsInput.equals("done")) {
-                String[] regularToppings = regularToppingsInput.split(",");
-                for (String topping : regularToppings) {
-                    sandwich.addRegularTopping(topping.trim());
+                Sandwich sandwich = null;
+                switch (sandwichChoice) {
+                    case 1:
+                        sandwich = createBLTSandwich();
+                        break;
+                    case 2:
+                        sandwich = createPhillyCheeseSteakSandwich();
+                        break;
+                    case 3:
+                        sandwich = createCustomSandwich();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        continue;
                 }
+                order.addSandwich(sandwich);  // Add sandwich to the order
             }
-
-            System.out.println("Add premium toppings (comma-separated, enter 'done' when finished):");
-            String premiumToppingsInput = scanner.nextLine();
-            if (!premiumToppingsInput.equals("done")) {
-                String[] premiumToppings = premiumToppingsInput.split(",");
-                for (String topping : premiumToppings) {
-                    // Check if the topping is a premium topping
-                    if (isPremiumTopping(topping.trim())) {
-                        System.out.println("Premium topping '" + topping.trim() + "' added (Additional cost applied).");
-                        sandwich.addPremiumTopping(topping.trim());
-                    } else {
-                        sandwich.addRegularTopping(topping.trim());
-                    }
-                }
-            }
-
-            order.addSandwich(sandwich);
         }
     }
 
+    // Method to create a custom sandwich
+    private Sandwich createCustomSandwich() {
+        // Prompt user to customize sandwich
+        System.out.println("Creating custom sandwich:");
+        System.out.println("Choose sandwich size (4/8/12 inches):");
+        String size = scanner.nextLine();
+        System.out.println("Choose bread type (white/wheat/rye/wrap):");
+        String bread = scanner.nextLine();
+        Sandwich sandwich = new Sandwich(size, bread);
+        System.out.println("Would you like it toasted? (yes/no)");
+        String toastedChoice = scanner.nextLine().toLowerCase();
+        sandwich.setToasted(toastedChoice.equals("yes"));
+
+        displayToppingOptions();  // Display topping options to the user
+
+        // Add regular toppings
+        System.out.println("Add regular toppings (comma-separated, enter 'done' when finished):");
+        String regularToppingsInput = scanner.nextLine();
+        if (!regularToppingsInput.equals("done")) {
+            String[] regularToppings = regularToppingsInput.split(",");
+            for (String topping : regularToppings) {
+                sandwich.addRegularTopping(topping.trim());
+            }
+        }
+
+        // Add premium toppings
+        System.out.println("Add premium toppings (comma-separated, enter 'done' when finished):");
+        String premiumToppingsInput = scanner.nextLine();
+        if (!premiumToppingsInput.equals("done")) {
+            String[] premiumToppings = premiumToppingsInput.split(",");
+            for (String topping : premiumToppings) {
+                if (isPremiumTopping(topping.trim())) {
+                    System.out.println("Premium topping '" + topping.trim() + "' added (Additional cost applied).");
+                    sandwich.addPremiumTopping(topping.trim());
+                } else {
+                    sandwich.addRegularTopping(topping.trim());
+                }
+            }
+        }
+
+        // Add sauces
+        System.out.println("Add sauces (comma-separated, enter 'done' when finished):");
+        String saucesInput = scanner.nextLine();
+        if (!saucesInput.equals("done")) {
+            String[] sauces = saucesInput.split(",");
+            for (String sauce : sauces) {
+                sandwich.addSauce(sauce.trim());
+            }
+        }
+
+        // Ask if the user wants to add extra meat
+        System.out.println("Would you like to add extra meat? (yes/no)");
+        String extraMeatChoice = scanner.nextLine().toLowerCase();
+        if (extraMeatChoice.equals("yes")) {
+            System.out.println("Extra meat added (Additional cost applied).");
+            sandwich.setExtraMeat(true);
+        }
+
+        // Ask if the user wants to add extra cheese
+        System.out.println("Would you like to add extra cheese? (yes/no)");
+        String extraCheeseChoice = scanner.nextLine().toLowerCase();
+        if (extraCheeseChoice.equals("yes")) {
+            System.out.println("Extra cheese added (Additional cost applied).");
+            sandwich.setExtraCheese(true);
+        }
+
+        return sandwich;
+    }
+
+    // Method to create a Philly Cheese Steak sandwich
+    private Sandwich createPhillyCheeseSteakSandwich() {
+        // Create a Philly Cheese Steak sandwich with default toppings
+        Sandwich sandwich = new Sandwich("8", "white");
+        sandwich.setToasted(true);
+        sandwich.addPremiumTopping("Steak");
+        sandwich.addPremiumTopping("American Cheese");
+        sandwich.addRegularTopping("Peppers");
+        sandwich.addRegularTopping("Mayo");
+
+        // Ask if the user wants to customize toppings
+        System.out.println("Would you like to customize your Philly Cheese Steak sandwich toppings? (yes/no)");
+        String customizeChoice = scanner.nextLine().toLowerCase();
+        if (customizeChoice.equals("yes")) {
+            customizeToppings(sandwich);
+        }
+
+        return sandwich;
+    }
+
+    // Method to create a BLT sandwich
+    private Sandwich createBLTSandwich() {
+        // Create a BLT sandwich with default toppings
+        Sandwich sandwich = new Sandwich("8", "white");
+        sandwich.setToasted(true);
+        sandwich.addRegularTopping("Bacon");
+        sandwich.addRegularTopping("Cheddar");
+        sandwich.addRegularTopping("Lettuce");
+        sandwich.addRegularTopping("Tomato");
+        sandwich.addRegularTopping("Ranch");
+
+        // Ask if the user wants to customize toppings
+        System.out.println("Would you like to customize your BLT sandwich toppings? (yes/no)");
+        String customizeChoice = scanner.nextLine().toLowerCase();
+        if (customizeChoice.equals("yes")) {
+            customizeToppings(sandwich);
+        }
+
+        return sandwich;
+    }
+
+    // Method to customize toppings of a sandwich
+    private void customizeToppings(Sandwich sandwich) {
+        // Display current toppings
+        System.out.println("Current toppings:");
+        System.out.println("Size: " + sandwich.getSize() + " inches");
+        System.out.println("Bread: " + sandwich.getBread());
+        System.out.println("Toasted: " + (sandwich.isToasted() ? "Yes" : "No"));
+        System.out.println("Toppings:");
+        for (String topping : sandwich.getRegularToppings()) {
+            System.out.println("- " + topping);
+        }
+        for (String topping : sandwich.getPremiumToppings()) {
+            System.out.println("- " + topping);
+        }
+
+        // Ask if the user wants to add or remove toppings
+        System.out.println("Would you like to add or remove toppings? (add/remove/no)");
+        String actionChoice = scanner.nextLine().toLowerCase();
+        if (actionChoice.equals("add")) {
+            System.out.println("Enter toppings to add (comma-separated):");
+            String toppingsToAdd = scanner.nextLine();
+            String[] toppings = toppingsToAdd.split(",");
+            for (String topping : toppings) {
+                sandwich.addRegularTopping(topping.trim());
+            }
+        } else if (actionChoice.equals("remove")) {
+            System.out.println("Enter toppings to remove (comma-separated):");
+            String toppingsToRemove = scanner.nextLine();
+            String[] toppings = toppingsToRemove.split(",");
+            for (String topping : toppings) {
+                sandwich.removeTopping(topping.trim());
+            }
+        }
+    }
+
+    // Method to check if a topping is premium
     private boolean isPremiumTopping(String topping) {
-        // Define your list of premium toppings here
-        String[] premiumToppings = {"Bacon", "Avocado", "Pepper Jack Cheese", "Jalapenos"};
+        // Define list of premium toppings
+        String[] premiumToppings = {"Bacon", "Avocado", "Jalapenos", "chicken", "steak", "ham", "salami", "roast beef "};
         for (String premium : premiumToppings) {
             if (topping.equalsIgnoreCase(premium)) {
                 return true;
@@ -268,31 +409,47 @@ public class SandwichOrderingSystem {
         return false;
     }
 
+    // Method to display topping options
     private void displayToppingOptions() {
+        // regular toppings
         System.out.println("Regular Toppings (price per topping):");
         System.out.println("- Lettuce ($0.50)");
         System.out.println("- Tomato ($0.50)");
         System.out.println("- Onion ($0.50)");
         System.out.println("- Pickles ($0.50)");
+
+        //premium toppings
         System.out.println("Premium Toppings (price per topping):");
         System.out.println("- Bacon ($1.50)");
         System.out.println("- Avocado ($1.00)");
-        System.out.println("- Pepper Jack Cheese ($1.00)");
         System.out.println("- Jalapenos ($0.75)");
+        System.out.println("- Steak ($2.00)");
+        System.out.println("- Ham ($1.50)");
+        System.out.println("- Salami ($1.25)");
+        System.out.println("- Roast Beef ($2.00)");
+        System.out.println("- Chicken ($1.75)");
+
+        //cheese
+        System.out.println("Cheese Options (price per cheese):");
+        System.out.println("- Cheddar ($0.75)");
+        System.out.println("- Swiss ($0.75)");
+        System.out.println("- Provolone ($0.75)");
     }
+
+    // Method to save the order to a file
     private void saveOrderToFile(String orderSummary) {
-        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime date = LocalDateTime.now();  // Get current date and time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-        String finalDate = date.format(formatter);
-        String pathThrough = "src/main/resources/dawnApp/" + finalDate + ".txt";
+        String finalDate = date.format(formatter);  // Format date
+        String pathThrough = "src/main/resources/dawnApp/" + finalDate + ".txt";  // Path to save file
         try {
-            FileWriter writer = new FileWriter(pathThrough);
-            writer.write(orderSummary);
-            writer.close();
-            System.out.println("Order has been saved to ");
+            FileWriter writer = new FileWriter(pathThrough);  // Create FileWriter object
+            writer.write(orderSummary);  // Write order summary to file
+            writer.close();  // Close the writer
+            System.out.println("Order has been saved to " + pathThrough);  // Print success message
         } catch (IOException e) {
-            System.out.println("An error occurred while saving the order.");
-            e.printStackTrace();
+            System.out.println("An error occurred while saving the order.");  // Print error message
+            e.printStackTrace();  // Print stack trace
         }
     }
 }

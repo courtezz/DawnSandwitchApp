@@ -1,0 +1,14 @@
+
+Order Details: 
+
+Sandwiches: 
+Size: 12", Regular Toppings: [onion, tomato, picckles, done, pepper jack, done], Premium Toppings: [bacon], Toasted: true, Cost: $11.05
+
+Drinks: 
+- Medium Pepsi
+
+Chips: 
+- Sour Cream & Onion Chips
+
+Total Price: 
+14.49
