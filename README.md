@@ -1,4 +1,4 @@
-courtezz johnon
+
 Dawn Sandwich Ordering System
 Welcome to Dawn Sandwich, 
 This Java application allows users to create custom sandwich orders, add drinks and chips, and checkout with a complete order summary. The program also saves the order details to a file for record-keeping.
