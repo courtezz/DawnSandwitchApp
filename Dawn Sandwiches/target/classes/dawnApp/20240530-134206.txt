@@ -1,0 +1,14 @@
+
+Order Details: 
+
+Sandwiches: 
+Size: 8", Regular Toppings: [Peppers, Mayo, salami], Premium Toppings: [Steak, American Cheese], Toasted: true, Cost: $10.35
+
+Drinks: 
+- Large Lemonade
+
+Chips: 
+- BBQ Chips
+
+Total Price: 
+11.49

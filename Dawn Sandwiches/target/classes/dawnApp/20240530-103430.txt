@@ -1,0 +1,9 @@
+
+Order Details: 
+
+Sandwiches: 
+Size: 12", Regular Toppings: [onion, tomato, done], Premium Toppings: [Steak, Chicken], Toasted: true, Cost: $11.85
+Size: 12", Regular Toppings: [], Premium Toppings: [], Toasted: true, Cost: $10.25
+
+Total Price: 
+21.98

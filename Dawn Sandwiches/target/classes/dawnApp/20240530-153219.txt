@@ -1,0 +1,16 @@
+
+Order Details: 
+
+Sandwiches: 
+Size: 8", Regular Toppings: [Bacon, Cheddar, Lettuce, Tomato, Ranch], Premium Toppings: [], Toasted: true, Cost: $8.75
+Size: 8", Regular Toppings: [Peppers, Mayo], Premium Toppings: [Steak, American Cheese], Toasted: true, Cost: $10.35
+Size: 12", Regular Toppings: [onion], Premium Toppings: [steak, chicken, salami], Toasted: true, Cost: $12.65
+
+Drinks: 
+- Medium Pepsi
+
+Chips: 
+- Sour Cream & Onion Chips
+
+Total Price: 
+30.47

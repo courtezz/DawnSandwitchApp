@@ -36,6 +36,7 @@ public class SandwichOrderingSystem {
             scanner.nextLine(); // Consume newline
 
             if (choice == 0) {  // If choice is 0, exit the application
+                System.out.println("Thank you for choosing Dawn Sandwich App!");
                 System.out.println("Exiting the application...");
                 break;
             } else if (choice == 1) {  // If choice is 1, start a new order
@@ -268,39 +269,36 @@ public class SandwichOrderingSystem {
         displayToppingOptions();  // Display topping options to the user
 
         // Add regular toppings
-        System.out.println("Add regular toppings (comma-separated, enter 'done' when finished):");
+        System.out.println("Add regular toppings (enter toppings separate with Comma, press Enter when finished):");
         String regularToppingsInput = scanner.nextLine();
-        if (!regularToppingsInput.equals("done")) {
-            String[] regularToppings = regularToppingsInput.split(",");
-            for (String topping : regularToppings) {
+        String[] regularToppings = regularToppingsInput.split(",");
+        for (String topping : regularToppings) {
+            sandwich.addRegularTopping(topping.trim());
+        }
+
+// Add premium toppings
+        System.out.println("Add premium toppings (enter toppings separate with Comma, press Enter when finished):");
+        String premiumToppingsInput = scanner.nextLine();
+        String[] premiumToppings = premiumToppingsInput.split(",");
+        for (String topping : premiumToppings) {
+            // Check if the topping is a premium topping
+            if (isPremiumTopping(topping.trim())) {
+                System.out.println("Premium topping '" + topping.trim() + "' added (Additional cost applied).");
+                sandwich.addPremiumTopping(topping.trim());
+            } else {
                 sandwich.addRegularTopping(topping.trim());
             }
         }
 
-        // Add premium toppings
-        System.out.println("Add premium toppings (comma-separated, enter 'done' when finished):");
-        String premiumToppingsInput = scanner.nextLine();
-        if (!premiumToppingsInput.equals("done")) {
-            String[] premiumToppings = premiumToppingsInput.split(",");
-            for (String topping : premiumToppings) {
-                if (isPremiumTopping(topping.trim())) {
-                    System.out.println("Premium topping '" + topping.trim() + "' added (Additional cost applied).");
-                    sandwich.addPremiumTopping(topping.trim());
-                } else {
-                    sandwich.addRegularTopping(topping.trim());
-                }
-            }
+// Add sauces
+        System.out.println("Add sauces (enter sauces separate with Comma, press Enter when finished):");
+        String saucesInput = scanner.nextLine();
+        String[] sauces = saucesInput.split(",");
+        for (String sauce : sauces) {
+            sandwich.addSauce(sauce.trim());
         }
 
-        // Add sauces
-        System.out.println("Add sauces (comma-separated, enter 'done' when finished):");
-        String saucesInput = scanner.nextLine();
-        if (!saucesInput.equals("done")) {
-            String[] sauces = saucesInput.split(",");
-            for (String sauce : sauces) {
-                sandwich.addSauce(sauce.trim());
-            }
-        }
+
 
         // Ask if the user wants to add extra meat
         System.out.println("Would you like to add extra meat? (yes/no)");
@@ -308,6 +306,9 @@ public class SandwichOrderingSystem {
         if (extraMeatChoice.equals("yes")) {
             System.out.println("Extra meat added (Additional cost applied).");
             sandwich.setExtraMeat(true);
+            // Apply additional charge for extra meat
+            // Add the price of extra meat to the total price of the order
+            totalPrice += 2.00; // Assuming an additional charge of $2.00 for extra meat
         }
 
         // Ask if the user wants to add extra cheese
@@ -316,6 +317,14 @@ public class SandwichOrderingSystem {
         if (extraCheeseChoice.equals("yes")) {
             System.out.println("Extra cheese added (Additional cost applied).");
             sandwich.setExtraCheese(true);
+            // Apply additional charge for extra cheese
+            // Add the price of extra cheese to the total price of the order
+            totalPrice += 0.75; // Assuming an additional charge of $0.75 for extra cheese
+
+            // Let the user choose the type of cheese
+            System.out.println("Choose cheese option (Cheddar/Swiss/Provolone):");
+            String cheeseInput = scanner.nextLine().trim();
+            sandwich.setCheese(cheeseInput); // Set the chosen cheese for the sandwich
         }
 
         return sandwich;
@@ -324,7 +333,7 @@ public class SandwichOrderingSystem {
     // Method to create a Philly Cheese Steak sandwich
     private Sandwich createPhillyCheeseSteakSandwich() {
         // Create a Philly Cheese Steak sandwich with default toppings
-        Sandwich sandwich = new Sandwich("8", "white");
+        Sandwich sandwich = new Sandwich("8", "White");
         sandwich.setToasted(true);
         sandwich.addPremiumTopping("Steak");
         sandwich.addPremiumTopping("American Cheese");
@@ -344,7 +353,7 @@ public class SandwichOrderingSystem {
     // Method to create a BLT sandwich
     private Sandwich createBLTSandwich() {
         // Create a BLT sandwich with default toppings
-        Sandwich sandwich = new Sandwich("8", "white");
+        Sandwich sandwich = new Sandwich("8", "White");
         sandwich.setToasted(true);
         sandwich.addRegularTopping("Bacon");
         sandwich.addRegularTopping("Cheddar");
