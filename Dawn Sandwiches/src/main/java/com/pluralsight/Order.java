@@ -18,7 +18,7 @@ class Order {
 
     public void addSandwich(Sandwich sandwich) {
         sandwiches.add(sandwich);
-        totalPrice += calculateSandwichPrice(sandwich);
+        totalPrice += sandwich.calculateCost(); // Using Sandwich's method to calculate cost
     }
 
     public void addDrink(String drink) {
@@ -29,31 +29,6 @@ class Order {
     public void addChips(String chipsType) {
         chips.add(chipsType);
         totalPrice += 1.5; // Assuming fixed price for all chips
-    }
-
-    private double calculateSandwichPrice(Sandwich sandwich) {
-        double basePrice = 0.0;
-        switch (sandwich.getSize()) {
-            case "4":
-                basePrice += 4.99;
-                break;
-            case "8":
-                basePrice += 7.99;
-                break;
-            case "12":
-                basePrice += 10.99;
-                break;
-            default:
-                break;
-        }
-
-        // Additional charges for premium toppings can be added here
-
-        if (sandwich.hasExtraMeat()) {
-            basePrice += 2.0; // Additional charge for extra meat
-        }
-
-        return basePrice;
     }
 
     public double calculateTotalPrice() {
@@ -75,7 +50,7 @@ class Order {
         if (!sandwiches.isEmpty()) {
             output.append("\nSandwiches: \n");
             for (Sandwich sandwich : sandwiches) {
-                output.append(sandwich.toString()).append("\n");
+                output.append("- ").append(sandwich.toString()).append("\n");
             }
         }
 
@@ -99,4 +74,5 @@ class Order {
         return output.toString();
     }
 }
+
 

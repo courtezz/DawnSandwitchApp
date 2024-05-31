@@ -1,0 +1,8 @@
+
+Order Details: 
+
+Sandwiches: 
+Size: 12", Regular Toppings: [onion pickle tomato, chicken steak bacon], Premium Toppings: [], Toasted: true, Cost: $10.25
+
+Total Price: 
+10.99

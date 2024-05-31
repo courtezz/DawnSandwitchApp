@@ -121,6 +121,11 @@ public class SandwichOrderingSystem {
         int chipsChoice = scanner.nextInt();  // Read user choice
         scanner.nextLine(); // Consume newline
 
+        // Get quantity of chips
+        System.out.println("Enter quantity of chips:");
+        int quantity = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
         String chipsType;
         double chipsPrice;
 
@@ -145,8 +150,11 @@ public class SandwichOrderingSystem {
                 break;
         }
 
-        order.addChips(chipsType);  // Add chips to the order
-        System.out.println("Chips added to the order.");
+        // Add chips to the order
+        for (int i = 0; i < quantity; i++) {
+            order.addChips(chipsType);
+        }
+        System.out.println(quantity + " chip(s) added to the order.");
     }
 
     // Method to add drink to the order
@@ -158,6 +166,11 @@ public class SandwichOrderingSystem {
         System.out.println("3) Large ($2.50)");
 
         int drinkSizeChoice = scanner.nextInt();  // Read user choice
+        scanner.nextLine(); // Consume newline
+
+        // Get quantity of drinks
+        System.out.println("Enter quantity of drinks:");
+        int quantity = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         String drinkSize;
@@ -183,6 +196,11 @@ public class SandwichOrderingSystem {
                 drinkPrice = 1.50;
                 break;
         }
+        // Add drinks to the order
+        for (int i = 0; i < quantity; i++) {
+            order.addDrink(drinkSize);
+        }
+        System.out.println(quantity + " drink(s) added to the order.");
 
         // Display options for drink type
         System.out.println("Choose drink option:");
